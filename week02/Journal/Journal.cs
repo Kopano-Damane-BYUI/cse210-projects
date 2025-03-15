@@ -4,29 +4,30 @@ using System.IO;
 
 public class Journal
 {
-    private List<JournalEntry> entries;
+    // Private member variable following _underscoreCamelCase
+    private List<JournalEntry> _entries;
 
     public Journal()
     {
-        entries = new List<JournalEntry>();
+        _entries = new List<JournalEntry>();
     }
 
     public void AddEntry(string prompt, string response)
     {
         string currentDate = DateTime.Now.ToShortDateString();
         JournalEntry newEntry = new JournalEntry(prompt, response, currentDate);
-        entries.Add(newEntry);
+        _entries.Add(newEntry);
     }
 
     public void DisplayEntries()
     {
-        if (entries.Count == 0)
+        if (_entries.Count == 0)
         {
             Console.WriteLine("No entries found.");
             return;
         }
 
-        foreach (var entry in entries)
+        foreach (var entry in _entries)
         {
             entry.DisplayEntry();
         }
@@ -37,7 +38,7 @@ public class Journal
     {
         using (StreamWriter writer = new StreamWriter(fileName))
         {
-            foreach (var entry in entries)
+            foreach (var entry in _entries)
             {
                 // Escape quotes and commas in entries and wrap values in quotes
                 string date = EscapeCsvValue(entry.Date);
@@ -54,7 +55,7 @@ public class Journal
     // Load journal entries from a CSV file
     public void LoadFromCSV(string fileName)
     {
-        entries.Clear();
+        _entries.Clear();
 
         if (!File.Exists(fileName))
         {
@@ -75,7 +76,7 @@ public class Journal
                 string response = parts[2];
 
                 JournalEntry entry = new JournalEntry(prompt, response, date);
-                entries.Add(entry);
+                _entries.Add(entry);
             }
         }
 

@@ -1,4 +1,3 @@
-//This CLASS will get each journal entry, which will include the prompt, the user's response, the date and store all and display 
 using System;
 
 public class JournalEntry
